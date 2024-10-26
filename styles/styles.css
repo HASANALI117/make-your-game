@@ -1,0 +1,49 @@
+body {
+  background-color: white;
+  overflow: hidden;
+  margin: 0;
+}
+
+#game-container {
+  background-image: url("../assets/bg-4.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  /* display: flex;
+  justify-content: center; */
+}
+
+#game-container #labels {
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 5rem;
+  /* background-color: cadetblue; */
+}
+
+#player {
+  width: 50px;
+  height: 50px;
+  background-image: url("../assets/plane.png");
+  background-size: cover;
+  position: absolute;
+  top: 850px;
+}
+
+#aliensGroup {
+  /* display: flex;
+  flex-wrap: wrap; */
+  width: 740px;
+  height: 420px;
+  position: absolute;
+  /* top: 100px;
+  left: 20px; */
+}
+
+.alien {
+  width: 40px;
+  height: 40px;
+  background-image: url("../assets/alien.png");
+  background-repeat: no-repeat;
+  position: absolute;
+}
