@@ -1,9 +1,11 @@
 // import { CANON_POSITION_TOP, CANON_WIDTH, CANON_HEIGHT } from "./setup";
 // import Player from "./Player";
 
-// const CANON_POSITION_TOP = 850;
-const CANON_WIDTH = 50;
-const CANON_HEIGHT = 50;
+const PLAYER_WIDTH = 50;
+const PLAYER_HEIGHT = 50;
+const ALIEN_NUM = 30;
+const ALIEN_POSX = 20;
+const ALIEN_POSY = 100;
 
 const DIRECTIONS = {
   ArrowRight: {
@@ -15,12 +17,17 @@ const DIRECTIONS = {
 };
 
 const gameContainer = document.getElementById("game-container");
-
+const score = document.getElementById("score");
+const lives = document.getElementById("lives");
+const time = document.getElementById("time");
+const fps = document.getElementById("fps");
 class Player {
   constructor(width, height) {
     // this.position = position;
     this.width = width;
     this.height = height;
+    this.player = null;
+    this.bullet = null;
   }
 
   createPlayer() {
@@ -36,7 +43,7 @@ class Player {
     document.addEventListener("keydown", (e) => {
       if (DIRECTIONS[e.key]) {
         let movement = DIRECTIONS[e.key].movement;
-        const playerLeft = player.getBoundingClientRect().left;
+        const playerLeft = this.player.getBoundingClientRect().left;
 
         if (e.key === "ArrowRight") {
           // Right movement
@@ -55,10 +62,10 @@ class Player {
 }
 
 class Alien {
-  constructor(posX, posY) {
+  constructor(alienNum, posX, posY) {
     this.posX = posX;
     this.posY = posY;
-    this.alienNum = 30;
+    this.alienNum = alienNum;
     this.moveDirection = "right";
   }
 
@@ -106,20 +113,20 @@ class Alien {
 }
 
 function startGame() {
-  const player = new Player(CANON_WIDTH, CANON_HEIGHT);
+  const player = new Player(PLAYER_WIDTH, PLAYER_HEIGHT);
   player.createPlayer();
   player.movePlayer();
-  const aliens = new Alien(20, 100);
+  const aliens = new Alien(ALIEN_NUM, ALIEN_POSX, ALIEN_POSY);
   aliens.createAliens();
 
   let lastTime = 0;
-  let fps = 0;
+  let fpsCounter = 0;
 
   function gameLoop(timestamp) {
     if (lastTime) {
       const delta = (timestamp - lastTime) / 1000;
-      fps = Math.round(1 / delta);
-      document.getElementById("fps").innerText = fps;
+      fpsCounter = Math.round(1 / delta);
+      fps.innerText = fpsCounter;
     }
     lastTime = timestamp;
 
