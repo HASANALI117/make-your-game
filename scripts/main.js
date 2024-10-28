@@ -33,6 +33,11 @@ function startGame() {
   let lastTime = 0;
   let fpsCounter = 0;
 
+  // Generate bullets from aliens every 1.5 seconds
+  setInterval(() => {
+    aliens.generateBullets();
+  }, 1500);
+
   function gameLoop(timestamp) {
     if (lastTime) {
       const delta = (timestamp - lastTime) / 1000;
@@ -42,6 +47,8 @@ function startGame() {
     lastTime = timestamp;
 
     aliens.moveAliens();
+    aliens.moveBullets();
+
     player.moveBullets();
     requestAnimationFrame(gameLoop);
   }

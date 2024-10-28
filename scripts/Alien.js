@@ -9,6 +9,7 @@ class Alien {
     this.height = height;
     this.image = image;
     this.moveDirection = "right";
+    this.bullets = [];
   }
 
   createAliens() {
@@ -17,7 +18,7 @@ class Alien {
 
     for (let i = 0; i < this.alienNum; i++) {
       let alien = document.createElement("div");
-      alien.setAttribute("id", i);
+      alien.setAttribute("id", `alien-${i}`);
       alien.classList.add("alien");
       aliensGroup.appendChild(alien);
       alien.style.top = (25 * (i - (i % (this.alienNum / 5)))) / 5 + "px";
@@ -54,6 +55,37 @@ class Alien {
       this.moveDirection = "right";
       this.posY += 25;
     }
+  }
+
+  generateBullets() {
+    const randomAlienIndex = Math.floor(Math.random() * this.alienNum);
+    const randomAlien = document.getElementById(`alien-${randomAlienIndex}`);
+
+    if (randomAlien) {
+      const bullet = document.createElement("div");
+      bullet.classList.add("alien-bullet");
+
+      const alienRect = randomAlien.getBoundingClientRect();
+      bullet.style.left = `${alienRect.left + 15}px`;
+      bullet.style.top = `${alienRect.top + 25}px`;
+
+      gameContainer.appendChild(bullet);
+      this.bullets.push(bullet);
+    }
+  }
+
+  moveBullets() {
+    this.bullets = this.bullets.filter((bullet) => {
+      const bulletTop = bullet.getBoundingClientRect().top;
+
+      if (bulletTop < window.innerHeight) {
+        bullet.style.top = `${bulletTop + 5}px`;
+        return true;
+      } else {
+        gameContainer.removeChild(bullet);
+        return false;
+      }
+    });
   }
 }
 
