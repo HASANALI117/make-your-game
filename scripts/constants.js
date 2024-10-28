@@ -1,3 +1,5 @@
+export const gameContainer = document.getElementById("game-container");
+
 export const PLAYER_WIDTH = 50;
 export const PLAYER_HEIGHT = 50;
 export const ALIEN_NUM = 30;

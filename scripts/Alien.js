@@ -1,4 +1,4 @@
-const gameContainer = document.getElementById("game-container");
+import { gameContainer } from "./constants.js";
 
 class Alien {
   constructor(alienNum, posX, posY) {

@@ -1,5 +1,4 @@
-const gameContainer = document.getElementById("game-container");
-import { DIRECTIONS } from "./constants.js";
+import { DIRECTIONS, gameContainer } from "./constants.js";
 
 class Player {
   constructor(width, height) {

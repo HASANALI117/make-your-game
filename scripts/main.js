@@ -3,13 +3,11 @@ import Player from "./Player.js";
 import {
   PLAYER_HEIGHT,
   PLAYER_WIDTH,
-  DIRECTIONS,
   ALIEN_NUM,
   ALIEN_POSX,
   ALIEN_POSY,
 } from "./constants.js";
 
-const gameContainer = document.getElementById("game-container");
 const score = document.getElementById("score");
 const lives = document.getElementById("lives");
 const time = document.getElementById("time");
