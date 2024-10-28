@@ -1,8 +1,7 @@
-import { gameContainer } from "./constants.js";
+import { DIRECTIONS, gameContainer } from "./constants.js";
 
 class Player {
   constructor(posX, posY, width, height, image) {
-    this.velocity = 10;
     this.posX = posX;
     this.posY = posY;
     this.width = width;
@@ -10,7 +9,6 @@ class Player {
     this.image = image;
     this.player = null;
     this.bullets = [];
-    this.movement = { left: false, right: false };
   }
 
   createPlayer() {
@@ -25,42 +23,41 @@ class Player {
     this.player = player;
   }
 
-  movePlayer() {
+  handleMovement() {
     this.player = player;
     document.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowRight") {
-        this.movement.right = true;
-      } else if (e.key === "ArrowLeft") {
-        this.movement.left = true;
+      if (DIRECTIONS[e.key]) {
+        DIRECTIONS[e.key].movement = true;
       }
 
       if (e.key == " ") {
         this.generateBullets();
       }
+    });
 
-      // Handle keyup to stop movement
-      document.addEventListener("keyup", (e) => {
-        if (e.key === "ArrowRight") {
-          this.movement.right = false;
-        } else if (e.key === "ArrowLeft") {
-          this.movement.left = false;
-        }
-      });
+    document.addEventListener("keyup", (e) => {
+      if (DIRECTIONS[e.key]) {
+        DIRECTIONS[e.key].movement = false;
+      }
     });
   }
 
   updatePosition() {
     const playerLeft = this.player.getBoundingClientRect().left;
 
-    if (this.movement.right) {
+    if (DIRECTIONS.ArrowRight.movement) {
       // Right movement
       if (playerLeft < window.innerWidth - this.width) {
-        player.style.left = `${playerLeft + this.velocity}px`;
+        this.player.style.left = `${
+          playerLeft + DIRECTIONS.ArrowRight.velocity
+        }px`;
       }
-    } else if (this.movement.left) {
+    } else if (DIRECTIONS.ArrowLeft.movement) {
       // Left movement
       if (playerLeft > 5) {
-        player.style.left = `${playerLeft + this.velocity * -1}px`;
+        this.player.style.left = `${
+          playerLeft + DIRECTIONS.ArrowLeft.velocity
+        }px`;
       }
     }
   }

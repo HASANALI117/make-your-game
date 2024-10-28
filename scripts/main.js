@@ -17,7 +17,7 @@ function startGame() {
   );
 
   player.createPlayer();
-  player.movePlayer();
+  player.handleMovement();
 
   const aliens = new Alien(
     ALIEN.NUM,

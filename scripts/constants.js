@@ -21,9 +21,11 @@ export const ALIEN = {
 
 export const DIRECTIONS = {
   ArrowRight: {
-    movement: 10,
+    velocity: 10,
+    movement: false,
   },
   ArrowLeft: {
-    movement: -10,
+    velocity: -10,
+    movement: false,
   },
 };
