@@ -1,6 +1,8 @@
-export const CANON_POSITION_TOP = 850;
-export const CANON_WIDTH = 50;
-export const CANON_HEIGHT = 50;
+export const PLAYER_WIDTH = 50;
+export const PLAYER_HEIGHT = 50;
+export const ALIEN_NUM = 30;
+export const ALIEN_POSX = 20;
+export const ALIEN_POSY = 100;
 
 export const DIRECTIONS = {
   ArrowRight: {
@@ -8,11 +10,5 @@ export const DIRECTIONS = {
   },
   ArrowLeft: {
     movement: -10,
-  },
-  ArrowUp: {
-    movement: -10,
-  },
-  ArrowDown: {
-    movement: 10,
   },
 };

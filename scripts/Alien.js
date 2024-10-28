@@ -1,8 +1,10 @@
+const gameContainer = document.getElementById("game-container");
+
 class Alien {
-  constructor(posX, posY) {
+  constructor(alienNum, posX, posY) {
     this.posX = posX;
     this.posY = posY;
-    this.alienNum = 30;
+    this.alienNum = alienNum;
     this.moveDirection = "right";
   }
 

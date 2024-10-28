@@ -1,8 +1,13 @@
+const gameContainer = document.getElementById("game-container");
+import { DIRECTIONS } from "./constants.js";
+
 class Player {
   constructor(width, height) {
     // this.position = position;
     this.width = width;
     this.height = height;
+    this.player = null;
+    this.bullet = null;
   }
 
   createPlayer() {
@@ -18,7 +23,7 @@ class Player {
     document.addEventListener("keydown", (e) => {
       if (DIRECTIONS[e.key]) {
         let movement = DIRECTIONS[e.key].movement;
-        const playerLeft = player.getBoundingClientRect().left;
+        const playerLeft = this.player.getBoundingClientRect().left;
 
         if (e.key === "ArrowRight") {
           // Right movement
