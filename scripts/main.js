@@ -50,6 +50,7 @@ function startGame() {
     aliens.moveBullets();
 
     player.moveBullets();
+    player.updatePosition();
     requestAnimationFrame(gameLoop);
   }
 

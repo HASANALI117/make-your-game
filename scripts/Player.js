@@ -1,7 +1,8 @@
-import { DIRECTIONS, gameContainer } from "./constants.js";
+import { gameContainer } from "./constants.js";
 
 class Player {
   constructor(posX, posY, width, height, image) {
+    this.velocity = 10;
     this.posX = posX;
     this.posY = posY;
     this.width = width;
@@ -9,6 +10,7 @@ class Player {
     this.image = image;
     this.player = null;
     this.bullets = [];
+    this.movement = { left: false, right: false };
   }
 
   createPlayer() {
@@ -26,27 +28,41 @@ class Player {
   movePlayer() {
     this.player = player;
     document.addEventListener("keydown", (e) => {
-      if (DIRECTIONS[e.key]) {
-        let movement = DIRECTIONS[e.key].movement;
-        const playerLeft = this.player.getBoundingClientRect().left;
-
-        if (e.key === "ArrowRight") {
-          // Right movement
-          if (playerLeft < window.innerWidth - this.width) {
-            player.style.left = playerLeft + movement + "px";
-          }
-        } else if (e.key === "ArrowLeft") {
-          // Left movement
-          if (playerLeft > 5) {
-            player.style.left = playerLeft + movement + "px";
-          }
-        }
+      if (e.key === "ArrowRight") {
+        this.movement.right = true;
+      } else if (e.key === "ArrowLeft") {
+        this.movement.left = true;
       }
 
       if (e.key == " ") {
         this.generateBullets();
       }
+
+      // Handle keyup to stop movement
+      document.addEventListener("keyup", (e) => {
+        if (e.key === "ArrowRight") {
+          this.movement.right = false;
+        } else if (e.key === "ArrowLeft") {
+          this.movement.left = false;
+        }
+      });
     });
+  }
+
+  updatePosition() {
+    const playerLeft = this.player.getBoundingClientRect().left;
+
+    if (this.movement.right) {
+      // Right movement
+      if (playerLeft < window.innerWidth - this.width) {
+        player.style.left = `${playerLeft + this.velocity}px`;
+      }
+    } else if (this.movement.left) {
+      // Left movement
+      if (playerLeft > 5) {
+        player.style.left = `${playerLeft + this.velocity * -1}px`;
+      }
+    }
   }
 
   generateBullets() {
