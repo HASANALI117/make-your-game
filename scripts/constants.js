@@ -1,10 +1,23 @@
 export const gameContainer = document.getElementById("game-container");
 
-export const PLAYER_WIDTH = 50;
-export const PLAYER_HEIGHT = 50;
-export const ALIEN_NUM = 30;
-export const ALIEN_POSX = 20;
-export const ALIEN_POSY = 100;
+// Player Constants
+export const PLAYER = {
+  POSX: 20,
+  POSY: 850,
+  WIDTH: 50,
+  HEIGHT: 50,
+  IMAGE: "plane.png",
+};
+
+// Alien Constants
+export const ALIEN = {
+  NUM: 30,
+  POSX: 20,
+  POSY: 100,
+  WIDTH: 40,
+  HEIGHT: 40,
+  IMAGE: "alien.png",
+};
 
 export const DIRECTIONS = {
   ArrowRight: {

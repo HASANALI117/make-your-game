@@ -1,10 +1,13 @@
 import { gameContainer } from "./constants.js";
 
 class Alien {
-  constructor(alienNum, posX, posY) {
+  constructor(alienNum, posX, posY, width, height, image) {
+    this.alienNum = alienNum;
     this.posX = posX;
     this.posY = posY;
-    this.alienNum = alienNum;
+    this.width = width;
+    this.height = height;
+    this.image = image;
     this.moveDirection = "right";
   }
 
@@ -17,8 +20,11 @@ class Alien {
       alien.setAttribute("id", i);
       alien.classList.add("alien");
       aliensGroup.appendChild(alien);
-      alien.style.left = 50 * (i % (this.alienNum / 5)) + "px";
       alien.style.top = (25 * (i - (i % (this.alienNum / 5)))) / 5 + "px";
+      alien.style.left = 50 * (i % (this.alienNum / 5)) + "px";
+      alien.style.width = this.width + "px";
+      alien.style.height = this.height + "px";
+      alien.style.backgroundImage = `url('../assets/${this.image}')`;
     }
 
     gameContainer.appendChild(aliensGroup);

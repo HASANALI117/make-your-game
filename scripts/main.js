@@ -1,12 +1,6 @@
 import Alien from "./Alien.js";
 import Player from "./Player.js";
-import {
-  PLAYER_HEIGHT,
-  PLAYER_WIDTH,
-  ALIEN_NUM,
-  ALIEN_POSX,
-  ALIEN_POSY,
-} from "./constants.js";
+import { PLAYER, ALIEN } from "./constants.js";
 
 const score = document.getElementById("score");
 const lives = document.getElementById("lives");
@@ -14,10 +8,26 @@ const time = document.getElementById("time");
 const fps = document.getElementById("fps");
 
 function startGame() {
-  const player = new Player(PLAYER_WIDTH, PLAYER_HEIGHT);
+  const player = new Player(
+    PLAYER.POSX,
+    PLAYER.POSY,
+    PLAYER.WIDTH,
+    PLAYER.HEIGHT,
+    PLAYER.IMAGE
+  );
+
   player.createPlayer();
   player.movePlayer();
-  const aliens = new Alien(ALIEN_NUM, ALIEN_POSX, ALIEN_POSY);
+
+  const aliens = new Alien(
+    ALIEN.NUM,
+    ALIEN.POSX,
+    ALIEN.POSY,
+    ALIEN.WIDTH,
+    ALIEN.HEIGHT,
+    ALIEN.IMAGE
+  );
+
   aliens.createAliens();
 
   let lastTime = 0;
