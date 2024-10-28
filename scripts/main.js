@@ -42,6 +42,7 @@ function startGame() {
     lastTime = timestamp;
 
     aliens.moveAliens();
+    player.moveBullets();
     requestAnimationFrame(gameLoop);
   }
 

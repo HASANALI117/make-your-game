@@ -8,7 +8,7 @@ class Player {
     this.height = height;
     this.image = image;
     this.player = null;
-    this.bullet = null;
+    this.bullets = [];
   }
 
   createPlayer() {
@@ -41,6 +41,38 @@ class Player {
             player.style.left = playerLeft + movement + "px";
           }
         }
+      }
+
+      if (e.key == " ") {
+        this.generateBullets();
+      }
+    });
+  }
+
+  generateBullets() {
+    let bullet = document.createElement("div");
+    bullet.classList.add("bullet");
+    const playerLeft = this.player.getBoundingClientRect().left;
+    const playerTop = this.player.getBoundingClientRect().top;
+
+    bullet.style.left = playerLeft + 20 + "px";
+    bullet.style.top = playerTop + "px";
+
+    gameContainer.appendChild(bullet);
+
+    this.bullets.push(bullet);
+  }
+
+  moveBullets() {
+    this.bullets = this.bullets.filter((bullet) => {
+      const bulletTop = bullet.getBoundingClientRect().top;
+
+      if (bulletTop > 0) {
+        bullet.style.top = bulletTop - 5 + "px";
+        return true;
+      } else {
+        gameContainer.removeChild(bullet);
+        return false;
       }
     });
   }
