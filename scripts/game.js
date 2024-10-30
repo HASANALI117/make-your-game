@@ -15,6 +15,7 @@ class Game {
     this.lives = document.getElementById('lives'); // lives element
     this.time = document.getElementById('time'); // time element
     this.fps = document.getElementById('fps'); // fps element
+    this.animationFrameId = null; // store the requestAnimationFrame ID
 
     this.addEventListeners(); // add event listeners
   }
@@ -54,12 +55,11 @@ class Game {
       }
     }, 1500);
 
-    requestAnimationFrame(this.gameLoop.bind(this)); // start the game loop
+    this.animationFrameId = requestAnimationFrame(this.gameLoop.bind(this)); // start the game loop
   }
 
   gameLoop(timestamp) {
     if (this.isPaused) {
-      requestAnimationFrame(this.gameLoop.bind(this));
       return;
     }
 
@@ -75,19 +75,27 @@ class Game {
 
     this.Player.moveBullets();
     this.Player.updatePosition();
-    requestAnimationFrame(this.gameLoop.bind(this));
+    this.animationFrameId = requestAnimationFrame(this.gameLoop.bind(this));
   }
 
   // pause, resume, and restart game functions
   pauseGame() {
     this.isPaused = true;
     this.pauseOverlay.style.visibility = 'visible';
+
+    // cancel the animation frame to pause the game loop
+    if (this.animationFrameId) {
+      cancelAnimationFrame(this.animationFrameId);
+      this.animationFrameId = null;
+    }
   }
 
   resumeGame() {
     this.isPaused = false;
     this.pauseOverlay.style.visibility = 'hidden';
-    requestAnimationFrame(this.gameLoop.bind(this));
+
+    // resume the game loop
+    this.animationFrameId = requestAnimationFrame(this.gameLoop.bind(this));
   }
 
   restartGame() {
