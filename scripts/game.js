@@ -3,22 +3,23 @@ import Player from './Player.js';
 
 class Game {
   constructor() {
-    this.Player = new Player();
-    this.Alien = new Alien();
-    this.isPaused = false;
-    this.lastTime = 0;
-    this.fpsCounter = 0;
-    this.pauseOverlay = document.getElementById('pause-menu');
-    this.resumeButton = document.getElementById('resume-button');
-    this.restartButton = document.getElementById('restart-button');
-    this.score = document.getElementById('score');
-    this.lives = document.getElementById('lives');
-    this.time = document.getElementById('time');
-    this.fps = document.getElementById('fps');
+    this.Player = new Player(); // player instance
+    this.Alien = new Alien(); // aliens instance
+    this.isPaused = false; // game state
+    this.lastTime = 0; // timestamp
+    this.fpsCounter = 0; // fps counter
+    this.pauseOverlay = document.getElementById('pause-menu'); // pause overlay element
+    this.resumeButton = document.getElementById('resume-button'); // resume button element
+    this.restartButton = document.getElementById('restart-button'); // restart button element
+    this.score = document.getElementById('score'); // score element
+    this.lives = document.getElementById('lives'); // lives element
+    this.time = document.getElementById('time'); // time element
+    this.fps = document.getElementById('fps'); // fps element
 
-    this.addEventListeners();
+    this.addEventListeners(); // add event listeners
   }
 
+  // add event listeners for pause, visibility change, resume, and restart
   addEventListeners() {
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape') {
@@ -40,18 +41,20 @@ class Game {
     this.restartButton.addEventListener('click', () => this.restartGame());
   }
 
+  // start the game by creating the player, handling movement, and creating aliens
   startGame() {
     this.Player.createPlayer();
     this.Player.handleMovement();
     this.Alien.createAliens();
 
+    // generate bullets for aliens every 1.5 seconds
     setInterval(() => {
       if (!this.isPaused) {
         this.Alien.generateBullets();
       }
     }, 1500);
 
-    requestAnimationFrame(this.gameLoop.bind(this));
+    requestAnimationFrame(this.gameLoop.bind(this)); // start the game loop
   }
 
   gameLoop(timestamp) {
@@ -75,6 +78,7 @@ class Game {
     requestAnimationFrame(this.gameLoop.bind(this));
   }
 
+  // pause, resume, and restart game functions
   pauseGame() {
     this.isPaused = true;
     this.pauseOverlay.style.visibility = 'visible';
