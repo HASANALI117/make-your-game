@@ -47,10 +47,12 @@ function startGame() {
     lastTime = timestamp;
 
     aliens.moveAliens();
-    aliens.moveBullets();
+    aliens.moveBullets(player);
 
     player.moveBullets();
     player.updatePosition();
+    player.checkCollisionWithAliens(aliens.aliens);
+
     requestAnimationFrame(gameLoop);
   }
 

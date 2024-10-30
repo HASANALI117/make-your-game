@@ -1,4 +1,5 @@
 import { gameContainer } from "./constants.js";
+import { isColliding } from "./utils.js";
 
 class Alien {
   constructor(alienNum, posX, posY, width, height, image) {
@@ -10,6 +11,7 @@ class Alien {
     this.image = image;
     this.moveDirection = "right";
     this.bullets = [];
+    this.aliens = [];
   }
 
   createAliens() {
@@ -26,6 +28,8 @@ class Alien {
       alien.style.width = this.width + "px";
       alien.style.height = this.height + "px";
       alien.style.backgroundImage = `url('../assets/${this.image}')`;
+
+      this.aliens.push(alien);
     }
 
     gameContainer.appendChild(aliensGroup);
@@ -74,17 +78,19 @@ class Alien {
     }
   }
 
-  moveBullets() {
+  moveBullets(player) {
     this.bullets = this.bullets.filter((bullet) => {
-      const bulletTop = bullet.getBoundingClientRect().top;
-
-      if (bulletTop < window.innerHeight) {
-        bullet.style.top = `${bulletTop + 5}px`;
-        return true;
-      } else {
+      bullet.style.top = bullet.getBoundingClientRect().top + 7 + "px";
+      if (bullet.getBoundingClientRect().top > window.innerHeight) {
         gameContainer.removeChild(bullet);
         return false;
+      } else if (isColliding(bullet, player.player)) {
+        gameContainer.removeChild(bullet);
+        console.log("player dead");
+
+        return false;
       }
+      return true;
     });
   }
 }

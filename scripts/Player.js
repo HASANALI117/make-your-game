@@ -1,4 +1,5 @@
 import { DIRECTIONS, gameContainer } from "./constants.js";
+import { isColliding } from "./utils.js";
 
 class Player {
   constructor(posX, posY, width, height, image) {
@@ -87,6 +88,21 @@ class Player {
         gameContainer.removeChild(bullet);
         return false;
       }
+    });
+  }
+
+  checkCollisionWithAliens(aliens) {
+    this.bullets.forEach((bullet, bulletIndex) => {
+      aliens.forEach((alien, alienIndex) => {
+        if (isColliding(bullet, alien)) {
+          gameContainer.removeChild(bullet);
+
+          alien.parentNode.removeChild(alien);
+          // console.log("Alien removed successfully");
+          this.bullets.splice(bulletIndex, 1);
+          aliens.splice(alienIndex, 1);
+        }
+      });
     });
   }
 }
