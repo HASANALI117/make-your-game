@@ -13,25 +13,12 @@ const restartButton = document.getElementById('restart-button');
 let isPaused = false;
 
 function startGame() {
-  const player = new Player(
-    PLAYER.POSX,
-    PLAYER.POSY,
-    PLAYER.WIDTH,
-    PLAYER.HEIGHT,
-    PLAYER.IMAGE
-  );
+  const player = new Player();
 
   player.createPlayer();
   player.handleMovement();
 
-  const aliens = new Alien(
-    ALIEN.NUM,
-    ALIEN.POSX,
-    ALIEN.POSY,
-    ALIEN.WIDTH,
-    ALIEN.HEIGHT,
-    ALIEN.IMAGE
-  );
+  const aliens = new Alien();
 
   aliens.createAliens();
 
