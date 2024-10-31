@@ -51,7 +51,7 @@ body {
   position: absolute;
 }
 
-#pause-menu {
+#game-menu {
   position: absolute;
   top: 0;
   left: 0;
@@ -65,18 +65,20 @@ body {
   align-items: center;
   z-index: 1000; /* Ensure it appears above other elements */
   visibility: hidden; /* Hide by default */
-}
-
-#pause-menu {
   text-align: center;
 }
 
-#pause-menu h1 {
+#game-menu h1 {
   font-size: 48px;
   margin-bottom: 30px;
 }
 
-#pause-menu button {
+#game-menu h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+#game-menu button {
   width: 200px;
   padding: 15px;
   margin: 10px;
@@ -96,6 +98,6 @@ body {
   color: white;
 }
 
-#pause-menu button:hover {
+#game-menu button:hover {
   opacity: 0.8;
 }

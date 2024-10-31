@@ -1,6 +1,16 @@
-import Alien from "./Alien.js";
-import Player from "./Player.js";
-import { formatTime, calculateFPS } from "./utils.js";
+import Alien from './Alien.js';
+import Player from './Player.js';
+import { formatTime, calculateFPS } from './utils.js';
+
+const gameMenu = document.getElementById('game-menu'); // game menu element
+const menuTitle = document.getElementById('menu-title'); // menu title element
+const menuScore = document.getElementById('menu-score'); // menu score element
+const resumeButton = document.getElementById('resume-button'); // resume button element
+const restartButton = document.getElementById('restart-button'); // restart button element
+const score = document.getElementById('score'); // score element
+const lives = document.getElementById('lives'); // lives element
+const time = document.getElementById('time'); // time element
+const fps = document.getElementById('fps'); // fps element
 
 class Game {
   constructor() {
@@ -8,23 +18,15 @@ class Game {
     this.Alien = new Alien(); // aliens instance
     this.isPaused = false; // game state
     this.lastTime = 0; // timestamp
-    this.pauseOverlay = document.getElementById("pause-menu"); // pause overlay element
-    this.resumeButton = document.getElementById("resume-button"); // resume button element
-    this.restartButton = document.getElementById("restart-button"); // restart button element
-    this.score = document.getElementById("score"); // score element
-    this.lives = document.getElementById("lives"); // lives element
-    this.time = document.getElementById("time"); // time element
-    this.fps = document.getElementById("fps"); // fps element
     this.animationFrameId = null; // store the requestAnimationFrame ID
     this.startTime = null; // Initialize start time
-
     this.addEventListeners(); // add event listeners
   }
 
   // add event listeners for pause, visibility change, resume, and restart
   addEventListeners() {
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") {
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
         if (this.isPaused) {
           this.resumeGame();
         } else {
@@ -33,14 +35,14 @@ class Game {
       }
     });
 
-    document.addEventListener("visibilitychange", () => {
-      if (document.visibilityState === "hidden") {
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') {
         this.pauseGame();
       }
     });
 
-    this.resumeButton.addEventListener("click", () => this.resumeGame());
-    this.restartButton.addEventListener("click", () => this.restartGame());
+    resumeButton.addEventListener('click', () => this.resumeGame());
+    restartButton.addEventListener('click', () => this.restartGame());
   }
 
   // start the game by creating the player, handling movement, and creating aliens
@@ -65,7 +67,7 @@ class Game {
     }
 
     if (this.lastTime) {
-      this.fps.innerText = calculateFPS(this.lastTime, timestamp);
+      fps.innerText = calculateFPS(this.lastTime, timestamp);
     }
     this.lastTime = timestamp;
 
@@ -75,17 +77,20 @@ class Game {
     this.Player.moveBullets();
     this.Player.updatePosition();
 
-    this.lives.innerText = this.Player.lives;
-    this.score.innerText = this.Player.score;
+    lives.innerText = this.Player.lives;
+    score.innerText = this.Player.score;
 
     // Calculate and update elapsed time
     const elapsedTime = Math.floor((timestamp - this.startTime) / 1000);
-    this.time.innerText = formatTime(elapsedTime);
+    time.innerText = formatTime(elapsedTime);
 
     // Check if player is out of lives
-    if (this.Player.lives <= 0 || this.Alien.aliens.length == 0) {
-      this.pauseGame();
-      console.log("Game Over");
+    if (this.Player.lives <= 0) {
+      this.pauseGame(true);
+      this.showMenu('Game Over', `Score: ${this.Player.score}`, false);
+    } else if (this.Alien.aliens.length === 0) {
+      this.pauseGame(true);
+      this.showMenu('Congratulations!', `Score: ${this.Player.score}`, false);
     }
 
     this.Player.checkCollisionWithAliens(this.Alien.aliens);
@@ -93,9 +98,11 @@ class Game {
   }
 
   // pause, resume, and restart game functions
-  pauseGame() {
+  pauseGame(endGame = false) {
     this.isPaused = true;
-    this.pauseOverlay.style.visibility = "visible";
+    if (!endGame) {
+      this.showMenu('Game Paused', '', true);
+    }
 
     // cancel the animation frame to pause the game loop
     if (this.animationFrameId) {
@@ -106,7 +113,7 @@ class Game {
 
   resumeGame() {
     this.isPaused = false;
-    this.pauseOverlay.style.visibility = "hidden";
+    gameMenu.style.visibility = 'hidden';
 
     // resume the game loop
     this.animationFrameId = requestAnimationFrame(this.gameLoop.bind(this));
@@ -114,6 +121,13 @@ class Game {
 
   restartGame() {
     location.reload();
+  }
+
+  showMenu(title, scoreText, showResume) {
+    menuTitle.innerText = title;
+    menuScore.innerText = scoreText;
+    resumeButton.style.display = showResume ? 'block' : 'none';
+    gameMenu.style.visibility = 'visible';
   }
 }
 
