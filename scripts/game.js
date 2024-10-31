@@ -5,6 +5,7 @@ import { formatTime, calculateFPS } from './utils.js';
 const gameMenu = document.getElementById('game-menu'); // game menu element
 const menuTitle = document.getElementById('menu-title'); // menu title element
 const menuScore = document.getElementById('menu-score'); // menu score element
+const startButton = document.getElementById('start-button'); // start button element
 const resumeButton = document.getElementById('resume-button'); // resume button element
 const restartButton = document.getElementById('restart-button'); // restart button element
 const score = document.getElementById('score'); // score element
@@ -23,7 +24,7 @@ class Game {
     this.addEventListeners(); // add event listeners
   }
 
-  // add event listeners for pause, visibility change, resume, and restart
+  // add event listeners for pause, visibility change, start, resume, and restart
   addEventListeners() {
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape') {
@@ -41,6 +42,7 @@ class Game {
       }
     });
 
+    startButton.addEventListener('click', () => this.startGame());
     resumeButton.addEventListener('click', () => this.resumeGame());
     restartButton.addEventListener('click', () => this.restartGame());
   }
@@ -58,7 +60,9 @@ class Game {
       }
     }, 1500);
 
+    this.startTime = performance.now(); // Set the start time
     this.animationFrameId = requestAnimationFrame(this.gameLoop.bind(this)); // start the game loop
+    gameMenu.style.visibility = 'hidden'; // Hide the menu
   }
 
   gameLoop(timestamp) {
@@ -126,7 +130,9 @@ class Game {
   showMenu(title, scoreText, showResume) {
     menuTitle.innerText = title;
     menuScore.innerText = scoreText;
+    startButton.style.display = 'none';
     resumeButton.style.display = showResume ? 'block' : 'none';
+    restartButton.style.display = 'block';
     gameMenu.style.visibility = 'visible';
   }
 }

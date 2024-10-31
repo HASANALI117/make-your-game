@@ -64,7 +64,6 @@ body {
   justify-content: center;
   align-items: center;
   z-index: 1000; /* Ensure it appears above other elements */
-  visibility: hidden; /* Hide by default */
   text-align: center;
 }
 
@@ -86,6 +85,11 @@ body {
   cursor: pointer;
   border: none;
   border-radius: 5px;
+}
+
+#start-button {
+  background-color: #007bff; /* Blue */
+  color: white;
 }
 
 #resume-button {
