@@ -1,5 +1,5 @@
-import Alien from './Alien.js';
-import Player from './Player.js';
+import Alien from "./Alien.js";
+import Player from "./Player.js";
 
 class Game {
   constructor() {
@@ -8,13 +8,13 @@ class Game {
     this.isPaused = false; // game state
     this.lastTime = 0; // timestamp
     this.fpsCounter = 0; // fps counter
-    this.pauseOverlay = document.getElementById('pause-menu'); // pause overlay element
-    this.resumeButton = document.getElementById('resume-button'); // resume button element
-    this.restartButton = document.getElementById('restart-button'); // restart button element
-    this.score = document.getElementById('score'); // score element
-    this.lives = document.getElementById('lives'); // lives element
-    this.time = document.getElementById('time'); // time element
-    this.fps = document.getElementById('fps'); // fps element
+    this.pauseOverlay = document.getElementById("pause-menu"); // pause overlay element
+    this.resumeButton = document.getElementById("resume-button"); // resume button element
+    this.restartButton = document.getElementById("restart-button"); // restart button element
+    this.score = document.getElementById("score"); // score element
+    this.lives = document.getElementById("lives"); // lives element
+    this.time = document.getElementById("time"); // time element
+    this.fps = document.getElementById("fps"); // fps element
     this.animationFrameId = null; // store the requestAnimationFrame ID
 
     this.addEventListeners(); // add event listeners
@@ -22,8 +22,8 @@ class Game {
 
   // add event listeners for pause, visibility change, resume, and restart
   addEventListeners() {
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') {
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
         if (this.isPaused) {
           this.resumeGame();
         } else {
@@ -32,14 +32,14 @@ class Game {
       }
     });
 
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'hidden') {
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") {
         this.pauseGame();
       }
     });
 
-    this.resumeButton.addEventListener('click', () => this.resumeGame());
-    this.restartButton.addEventListener('click', () => this.restartGame());
+    this.resumeButton.addEventListener("click", () => this.resumeGame());
+    this.restartButton.addEventListener("click", () => this.restartGame());
   }
 
   // start the game by creating the player, handling movement, and creating aliens
@@ -71,17 +71,18 @@ class Game {
     this.lastTime = timestamp;
 
     this.Alien.moveAliens();
-    this.Alien.moveBullets();
+    this.Alien.moveBullets(this.Player);
 
     this.Player.moveBullets();
     this.Player.updatePosition();
+    this.Player.checkCollisionWithAliens(this.Alien.aliens);
     this.animationFrameId = requestAnimationFrame(this.gameLoop.bind(this));
   }
 
   // pause, resume, and restart game functions
   pauseGame() {
     this.isPaused = true;
-    this.pauseOverlay.style.visibility = 'visible';
+    this.pauseOverlay.style.visibility = "visible";
 
     // cancel the animation frame to pause the game loop
     if (this.animationFrameId) {
@@ -92,7 +93,7 @@ class Game {
 
   resumeGame() {
     this.isPaused = false;
-    this.pauseOverlay.style.visibility = 'hidden';
+    this.pauseOverlay.style.visibility = "hidden";
 
     // resume the game loop
     this.animationFrameId = requestAnimationFrame(this.gameLoop.bind(this));
