@@ -86,19 +86,25 @@ class Alien {
     }
   }
 
+  checkBulletCollision(player, bullet) {
+    if (bullet.getBoundingClientRect().top > window.innerHeight) {
+      // remove bullet if it goes out of the screen
+      gameContainer.removeChild(bullet);
+      return false;
+    } else if (isColliding(bullet, player.player)) {
+      // check if bullet collides with player
+      gameContainer.removeChild(bullet);
+      player.lives--;
+      return false;
+    }
+    return true;
+  }
+  
+
   moveBullets(player) {
     this.bullets = this.bullets.filter((bullet) => {
-      bullet.style.top = bullet.getBoundingClientRect().top + 7 + "px";
-      if (bullet.getBoundingClientRect().top > window.innerHeight) {
-        gameContainer.removeChild(bullet);
-        return false;
-      } else if (isColliding(bullet, player.player)) {
-        gameContainer.removeChild(bullet);
-
-        player.lives--;
-        return false;
-      }
-      return true;
+      bullet.style.top = bullet.getBoundingClientRect().top + 7 + "px"; // move bullet down by 7px
+      return this.checkBulletCollision(player, bullet);
     });
   }
 }
