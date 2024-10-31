@@ -77,9 +77,10 @@ class Game {
     this.Player.updatePosition();
 
     this.lives.innerText = this.Player.lives;
+    this.score.innerText = this.Player.score;
 
     // Check if player is out of lives
-    if (this.Player.lives <= 0) {
+    if (this.Player.lives <= 0 || this.Alien.aliens.length == 0) {
       this.pauseGame();
       console.log("Game Over");
     }

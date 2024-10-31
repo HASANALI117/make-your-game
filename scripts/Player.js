@@ -9,7 +9,8 @@ class Player {
     width = PLAYER.WIDTH,
     height = PLAYER.HEIGHT,
     image = PLAYER.IMAGE,
-    lives = 3
+    lives = 3,
+    score = 0
   ) {
     this.posX = posX;
     this.posY = posY;
@@ -19,6 +20,7 @@ class Player {
     this.player = null;
     this.bullets = [];
     this.lives = lives;
+    this.score = score;
   }
 
   createPlayer() {
@@ -105,11 +107,12 @@ class Player {
       aliens.forEach((alien, alienIndex) => {
         if (isColliding(bullet, alien)) {
           gameContainer.removeChild(bullet);
-
           alien.parentNode.removeChild(alien);
-          // console.log("Alien removed successfully");
+
           this.bullets.splice(bulletIndex, 1);
           aliens.splice(alienIndex, 1);
+
+          this.score += 10;
         }
       });
     });
