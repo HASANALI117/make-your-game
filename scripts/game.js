@@ -1,5 +1,6 @@
 import Alien from "./Alien.js";
 import Player from "./Player.js";
+import { formatTime, calculateFPS } from "./utils.js";
 
 class Game {
   constructor() {
@@ -7,7 +8,6 @@ class Game {
     this.Alien = new Alien(); // aliens instance
     this.isPaused = false; // game state
     this.lastTime = 0; // timestamp
-    this.fpsCounter = 0; // fps counter
     this.pauseOverlay = document.getElementById("pause-menu"); // pause overlay element
     this.resumeButton = document.getElementById("resume-button"); // resume button element
     this.restartButton = document.getElementById("restart-button"); // restart button element
@@ -16,6 +16,7 @@ class Game {
     this.time = document.getElementById("time"); // time element
     this.fps = document.getElementById("fps"); // fps element
     this.animationFrameId = null; // store the requestAnimationFrame ID
+    this.startTime = null; // Initialize start time
 
     this.addEventListeners(); // add event listeners
   }
@@ -64,9 +65,7 @@ class Game {
     }
 
     if (this.lastTime) {
-      const delta = (timestamp - this.lastTime) / 1000;
-      this.fpsCounter = Math.round(1 / delta);
-      this.fps.innerText = this.fpsCounter;
+      this.fps.innerText = calculateFPS(this.lastTime, timestamp);
     }
     this.lastTime = timestamp;
 
@@ -78,6 +77,10 @@ class Game {
 
     this.lives.innerText = this.Player.lives;
     this.score.innerText = this.Player.score;
+
+    // Calculate and update elapsed time
+    const elapsedTime = Math.floor((timestamp - this.startTime) / 1000);
+    this.time.innerText = formatTime(elapsedTime);
 
     // Check if player is out of lives
     if (this.Player.lives <= 0 || this.Alien.aliens.length == 0) {

@@ -9,3 +9,14 @@ export function isColliding(element1, element2) {
     rect1.bottom > rect2.top
   );
 }
+
+export function formatTime(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
+}
+
+export function calculateFPS(lastTime, timestamp) {
+  const delta = (timestamp - lastTime) / 1000;
+  return Math.round(1 / delta);
+}
