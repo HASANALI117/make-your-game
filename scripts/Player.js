@@ -1,5 +1,6 @@
-import { DIRECTIONS, gameContainer } from './constants.js';
-import { PLAYER } from './constants.js';
+import { DIRECTIONS, gameContainer } from "./constants.js";
+import { PLAYER } from "./constants.js";
+import { isColliding } from "./utils.js";
 
 class Player {
   constructor(
@@ -19,12 +20,12 @@ class Player {
   }
 
   createPlayer() {
-    let player = document.createElement('div');
-    player.setAttribute('id', 'player');
-    player.style.top = this.posY + 'px';
-    player.style.left = this.posX + 'px';
-    player.style.width = this.width + 'px';
-    player.style.height = this.height + 'px';
+    let player = document.createElement("div");
+    player.setAttribute("id", "player");
+    player.style.top = this.posY + "px";
+    player.style.left = this.posX + "px";
+    player.style.width = this.width + "px";
+    player.style.height = this.height + "px";
     player.style.backgroundImage = `url('../assets/${this.image}')`;
     gameContainer.appendChild(player);
     this.player = player;
@@ -32,17 +33,17 @@ class Player {
 
   handleMovement() {
     this.player = player;
-    document.addEventListener('keydown', (e) => {
+    document.addEventListener("keydown", (e) => {
       if (DIRECTIONS[e.key]) {
         DIRECTIONS[e.key].movement = true;
       }
 
-      if (e.key == ' ') {
+      if (e.key == " ") {
         this.generateBullets();
       }
     });
 
-    document.addEventListener('keyup', (e) => {
+    document.addEventListener("keyup", (e) => {
       if (DIRECTIONS[e.key]) {
         DIRECTIONS[e.key].movement = false;
       }
@@ -70,13 +71,13 @@ class Player {
   }
 
   generateBullets() {
-    let bullet = document.createElement('div');
-    bullet.classList.add('bullet');
+    let bullet = document.createElement("div");
+    bullet.classList.add("bullet");
     const playerLeft = this.player.getBoundingClientRect().left;
     const playerTop = this.player.getBoundingClientRect().top;
 
-    bullet.style.left = playerLeft + 20 + 'px';
-    bullet.style.top = playerTop + 'px';
+    bullet.style.left = playerLeft + 20 + "px";
+    bullet.style.top = playerTop + "px";
 
     gameContainer.appendChild(bullet);
 
@@ -88,12 +89,27 @@ class Player {
       const bulletTop = bullet.getBoundingClientRect().top;
 
       if (bulletTop > 0) {
-        bullet.style.top = bulletTop - 5 + 'px';
+        bullet.style.top = bulletTop - 5 + "px";
         return true;
       } else {
         gameContainer.removeChild(bullet);
         return false;
       }
+    });
+  }
+
+  checkCollisionWithAliens(aliens) {
+    this.bullets.forEach((bullet, bulletIndex) => {
+      aliens.forEach((alien, alienIndex) => {
+        if (isColliding(bullet, alien)) {
+          gameContainer.removeChild(bullet);
+
+          alien.parentNode.removeChild(alien);
+          // console.log("Alien removed successfully");
+          this.bullets.splice(bulletIndex, 1);
+          aliens.splice(alienIndex, 1);
+        }
+      });
     });
   }
 }
