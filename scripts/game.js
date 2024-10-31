@@ -75,6 +75,15 @@ class Game {
 
     this.Player.moveBullets();
     this.Player.updatePosition();
+
+    this.lives.innerText = this.Player.lives;
+
+    // Check if player is out of lives
+    if (this.Player.lives <= 0) {
+      this.pauseGame();
+      console.log("Game Over");
+    }
+
     this.Player.checkCollisionWithAliens(this.Alien.aliens);
     this.animationFrameId = requestAnimationFrame(this.gameLoop.bind(this));
   }

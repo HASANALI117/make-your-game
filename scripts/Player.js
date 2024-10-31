@@ -8,7 +8,8 @@ class Player {
     posY = PLAYER.POSY,
     width = PLAYER.WIDTH,
     height = PLAYER.HEIGHT,
-    image = PLAYER.IMAGE
+    image = PLAYER.IMAGE,
+    lives = 3
   ) {
     this.posX = posX;
     this.posY = posY;
@@ -17,6 +18,7 @@ class Player {
     this.image = image;
     this.player = null;
     this.bullets = [];
+    this.lives = lives;
   }
 
   createPlayer() {

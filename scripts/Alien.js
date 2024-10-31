@@ -94,8 +94,8 @@ class Alien {
         return false;
       } else if (isColliding(bullet, player.player)) {
         gameContainer.removeChild(bullet);
-        console.log("player dead");
 
+        player.lives--;
         return false;
       }
       return true;
