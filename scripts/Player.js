@@ -1,6 +1,6 @@
 import { DIRECTIONS, gameContainer } from "./constants.js";
 import { PLAYER } from "./constants.js";
-import { isColliding } from "./utils.js";
+import { isColliding, playSound } from "./utils.js";
 
 class Player {
   constructor(
@@ -113,6 +113,8 @@ class Player {
           aliens.splice(alienIndex, 1);
 
           this.score += 10;
+
+          playSound("../sounds/classic_hurt.mp3");
         }
       });
     });

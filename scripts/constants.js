@@ -16,7 +16,7 @@ export const ALIEN = {
   POSY: 100,
   WIDTH: 40,
   HEIGHT: 40,
-  IMAGE: "alien.png",
+  IMAGE: "alien-1.png",
 };
 
 export const DIRECTIONS = {

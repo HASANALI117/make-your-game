@@ -1,11 +1,15 @@
+// Game.js
+// Game.js
 import Alien from "./Alien.js";
 import Player from "./Player.js";
+import BossAlien from "./BossAlien.js"; // Import the BossAlien class
 import { formatTime, calculateFPS } from "./utils.js";
 
 class Game {
   constructor() {
     this.Player = new Player(); // player instance
     this.Alien = new Alien(); // aliens instance
+    this.BossAlien = null; // boss alien instance
     this.isPaused = false; // game state
     this.lastTime = 0; // timestamp
     this.pauseOverlay = document.getElementById("pause-menu"); // pause overlay element
@@ -47,12 +51,19 @@ class Game {
   startGame() {
     this.Player.createPlayer();
     this.Player.handleMovement();
-    this.Alien.createAliens();
+    // this.Alien.createAliens(); // Comment out the normal aliens creation
+
+    // Directly create the boss alien for testing
+    this.BossAlien = new BossAlien();
+    this.BossAlien.createBossAlien();
 
     // generate bullets for aliens every 1.5 seconds
     setInterval(() => {
       if (!this.isPaused) {
-        this.Alien.generateBullets();
+        // this.Alien.generateBullets(); // Comment out the normal aliens bullet generation
+        if (this.BossAlien) {
+          this.BossAlien.generateBullets();
+        }
       }
     }, 1500);
 
@@ -69,8 +80,8 @@ class Game {
     }
     this.lastTime = timestamp;
 
-    this.Alien.moveAliens();
-    this.Alien.moveBullets(this.Player);
+    // this.Alien.moveAliens(); // Comment out the normal aliens movement
+    // this.Alien.moveBullets(this.Player); // Comment out the normal aliens bullet movement
 
     this.Player.moveBullets();
     this.Player.updatePosition();
@@ -83,12 +94,19 @@ class Game {
     this.time.innerText = formatTime(elapsedTime);
 
     // Check if player is out of lives
-    if (this.Player.lives <= 0 || this.Alien.aliens.length == 0) {
+    if (this.Player.lives <= 0) {
       this.pauseGame();
       console.log("Game Over");
     }
 
-    this.Player.checkCollisionWithAliens(this.Alien.aliens);
+    // Check collision with boss alien
+    if (this.BossAlien) {
+      this.Player.checkCollisionWithAliens(this.BossAlien.aliens);
+      this.BossAlien.moveAliens();
+      this.BossAlien.moveBullets(this.Player);
+    }
+
+    // this.Player.checkCollisionWithAliens(this.Alien.aliens); // Comment out the normal aliens collision check
     this.animationFrameId = requestAnimationFrame(this.gameLoop.bind(this));
   }
 
