@@ -1,6 +1,6 @@
 import { DIRECTIONS, gameContainer } from "./constants.js";
 import { PLAYER } from "./constants.js";
-import { isColliding } from "./utils.js";
+import { isColliding, playSoundOnHit } from "./utils.js";
 
 class Player {
   constructor(
@@ -107,12 +107,14 @@ class Player {
       aliens.forEach((alien, alienIndex) => {
         if (isColliding(bullet, alien)) {
           gameContainer.removeChild(bullet);
-          alien.parentNode.removeChild(alien);
-
           this.bullets.splice(bulletIndex, 1);
+
+          alien.parentNode.removeChild(alien);
           aliens.splice(alienIndex, 1);
 
           this.score += 10;
+
+          playSoundOnHit("../sounds/munch.wav");
         }
       });
     });

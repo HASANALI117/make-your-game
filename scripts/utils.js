@@ -20,3 +20,8 @@ export function calculateFPS(lastTime, timestamp) {
   const delta = (timestamp - lastTime) / 1000;
   return Math.round(1 / delta);
 }
+
+export function playSoundOnHit(soundFilePath) {
+  const audio = new Audio(soundFilePath);
+  audio.play();
+}
