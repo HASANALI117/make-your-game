@@ -85,7 +85,7 @@ class BossAlien {
     } else if (isColliding(bullet, player.player)) {
       // check if bullet collides with player
       gameContainer.removeChild(bullet);
-      player.lives--;
+      player.lives = 0;
       return false;
     }
     return true;
