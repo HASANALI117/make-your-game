@@ -57,11 +57,12 @@ class Game {
     this.BossAlien.createBoss();
 
     // generate bullets for aliens every 1.5 seconds
-    // setInterval(() => {
-    //   if (!this.isPaused) {
-    //     this.Alien.generateBullets();
-    //   }
-    // }, 1500);
+    setInterval(() => {
+      if (!this.isPaused) {
+        // this.Alien.generateBullets();
+        this.BossAlien.generateBullets();
+      }
+    }, 1500);
 
     this.startTime = performance.now(); // Set the start time
     this.animationFrameId = requestAnimationFrame(this.gameLoop.bind(this)); // start the game loop
@@ -81,6 +82,7 @@ class Game {
     // this.Alien.moveAliens();
     // this.Alien.moveBullets(this.Player);
     this.BossAlien.moveBoss();
+    this.BossAlien.moveBullets(this.Player);
 
     this.Player.moveBullets();
     this.Player.updatePosition();
@@ -93,16 +95,25 @@ class Game {
     time.innerText = formatTime(elapsedTime);
 
     // Check if player is out of lives
-    if (this.Player.lives <= 0) {
-      this.pauseGame(true);
-      this.showMenu("Game Over", `Score: ${this.Player.score}`, false);
-    }
+    // if (this.Player.lives <= 0) {
+    //   this.pauseGame(true);
+    //   this.showMenu("Game Over", `Score: ${this.Player.score}`, false);
+    // }
     // else if (this.Alien.aliens.length === 0) {
     //   this.pauseGame(true);
     //   this.showMenu("Congratulations!", `Score: ${this.Player.score}`, false);
     // }
 
-    this.Player.checkCollisionWithAliens(this.Alien.aliens);
+    if (this.Player.checkCollisionWithBoss(this.BossAlien)) {
+      if (this.BossAlien.reduceHealth()) {
+        this.pauseGame(true);
+        this.showMenu("Victory!", `Score: ${this.Player.score}`, false);
+      } else {
+        this.Player.score += 100; // Add extra points for boss hit
+      }
+    }
+
+    // this.Player.checkCollisionWithAliens(this.Alien.aliens);
     this.animationFrameId = requestAnimationFrame(this.gameLoop.bind(this));
   }
 

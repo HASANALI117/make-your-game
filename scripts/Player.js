@@ -119,6 +119,19 @@ class Player {
       });
     });
   }
+
+  checkCollisionWithBoss(boss) {
+    return this.bullets.some((bullet, index) => {
+      if (isColliding(bullet, boss.bossAlien)) {
+        gameContainer.removeChild(bullet);
+        this.bullets.splice(index, 1);
+
+        playSoundOnHit("../sounds/classic_hurt.mp3");
+        return true;
+      }
+      return false;
+    });
+  }
 }
 
 export default Player;
