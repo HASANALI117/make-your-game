@@ -106,3 +106,10 @@ body {
 #game-menu button:hover {
   opacity: 0.8;
 }
+
+#boss-alien {
+  position: absolute;
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-top: 20px;
+}

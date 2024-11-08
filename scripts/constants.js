@@ -19,6 +19,15 @@ export const ALIEN = {
   IMAGE: "alien.png",
 };
 
+// BOSS Alien Constants
+export const BOSS = {
+  POSITION: { X: 20, Y: 100 },
+  WIDTH: 400,
+  HEIGHT: 400,
+  IMAGE: "alien.png",
+  HEALTH: 20,
+};
+
 export const DIRECTIONS = {
   ArrowRight: {
     velocity: 10,
