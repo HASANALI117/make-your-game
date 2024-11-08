@@ -1,7 +1,8 @@
 import Alien from "./Alien.js";
 import Player from "./Player.js";
 import BossAlien from "./BossAlien.js";
-import { formatTime, calculateFPS } from "./utils.js";
+import { formatTime, calculateFPS, playSoundOnHit } from "./utils.js";
+import { LOSE_SOUNDS, WIN_SOUNDS, START_SOUNDS } from "./constants.js";
 
 const gameMenu = document.getElementById("game-menu"); // game menu element
 const menuTitle = document.getElementById("menu-title"); // menu title element
@@ -23,6 +24,7 @@ class Game {
     this.lastTime = 0; // timestamp
     this.animationFrameId = null; // store the requestAnimationFrame ID
     this.startTime = null; // Initialize start time
+    this.currentAudio = null; // Track the currently playing audio
     this.addEventListeners(); // add event listeners
   }
 
@@ -65,6 +67,7 @@ class Game {
     this.startTime = performance.now(); // Set the start time
     this.animationFrameId = requestAnimationFrame(this.gameLoop.bind(this)); // start the game loop
     gameMenu.style.visibility = "hidden"; // Hide the menu
+    this.currentAudio = playSoundOnHit(START_SOUNDS, 0.1);
   }
 
   gameLoop(timestamp) {
@@ -94,6 +97,7 @@ class Game {
     if (this.Player.lives <= 0) {
       this.pauseGame(true);
       this.showMenu("Game Over", `Score: ${this.Player.score}`, false);
+      this.currentAudio = playSoundOnHit(LOSE_SOUNDS);
     } else if (this.Alien.aliens.length === 0 && !this.BossAlien) {
       this.BossAlien = new BossAlien();
       this.BossAlien.createBoss();
@@ -113,6 +117,7 @@ class Game {
         if (this.BossAlien.reduceHealth()) {
           this.pauseGame(true);
           this.showMenu("Victory!", `Score: ${this.Player.score}`, false);
+          this.currentAudio = playSoundOnHit(WIN_SOUNDS);
         } else {
           this.Player.score += 100; // Add extra points for boss hit
         }
@@ -135,6 +140,11 @@ class Game {
       cancelAnimationFrame(this.animationFrameId);
       this.animationFrameId = null;
     }
+
+    // Pause the currently playing audio
+    if (this.currentAudio) {
+      this.currentAudio.pause();
+    }
   }
 
   resumeGame() {
@@ -143,6 +153,11 @@ class Game {
 
     // resume the game loop
     this.animationFrameId = requestAnimationFrame(this.gameLoop.bind(this));
+
+    // Resume the currently playing audio
+    if (this.currentAudio) {
+      this.currentAudio.play();
+    }
   }
 
   restartGame() {

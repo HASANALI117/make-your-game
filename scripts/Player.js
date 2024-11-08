@@ -1,5 +1,10 @@
-import { DIRECTIONS, gameContainer } from "./constants.js";
-import { PLAYER } from "./constants.js";
+import {
+  PLAYER,
+  DIRECTIONS,
+  gameContainer,
+  ALIEN_SOUNDS,
+  BOSS_SOUNDS,
+} from "./constants.js";
 import { isColliding, playSoundOnHit } from "./utils.js";
 
 class Player {
@@ -112,7 +117,7 @@ class Player {
 
           this.score += 10;
 
-          playSoundOnHit("../sounds/munch.wav");
+          playSoundOnHit(ALIEN_SOUNDS);
         }
       });
     });
@@ -124,7 +129,7 @@ class Player {
         gameContainer.removeChild(bullet);
         this.bullets.splice(index, 1);
 
-        playSoundOnHit("../sounds/classic_hurt.mp3");
+        playSoundOnHit(BOSS_SOUNDS);
         return true;
       }
       return false;

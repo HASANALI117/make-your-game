@@ -1,6 +1,5 @@
-import { gameContainer } from "./constants.js";
-import { ALIEN } from "./constants.js";
-import { isColliding } from "./utils.js";
+import { ALIEN, gameContainer, PLAYER_SOUNDS } from "./constants.js";
+import { isColliding, playSoundOnHit } from "./utils.js";
 
 class Alien {
   constructor(
@@ -110,6 +109,7 @@ class Alien {
       // check if bullet collides with player
       gameContainer.removeChild(bullet);
       player.lives -= this.damage;
+      playSoundOnHit(PLAYER_SOUNDS);
       return false;
     }
     return true;
