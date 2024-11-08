@@ -10,13 +10,15 @@ class BossAlien {
     width = BOSS.WIDTH,
     height = BOSS.HEIGHT,
     image = BOSS.IMAGE,
-    health = BOSS.HEALTH
+    health = BOSS.HEALTH,
+    speed = BOSS.SPEED
   ) {
     this.position = position;
     this.width = width;
     this.height = height;
     this.image = image;
     this.health = health;
+    this.speed = speed;
     this.moveDirection = "right";
     this.bullets = [];
     this.bossAlien = null;
@@ -50,9 +52,9 @@ class BossAlien {
 
   moveBoss() {
     if (this.moveDirection === "right") {
-      this.position.x += BOSS.SPEED;
+      this.position.x += this.speed;
     } else {
-      this.position.x -= BOSS.SPEED;
+      this.position.x -= this.speed;
     }
 
     bossContainer.style.left = `${this.position.x}px`;

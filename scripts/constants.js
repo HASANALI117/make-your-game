@@ -2,8 +2,7 @@ export const gameContainer = document.getElementById("game-container");
 
 // Player Constants
 export const PLAYER = {
-  POSX: 20,
-  POSY: 850,
+  POSITION: { X: 20, Y: 850 },
   WIDTH: 50,
   HEIGHT: 50,
   IMAGE: "plane.png",
@@ -12,11 +11,11 @@ export const PLAYER = {
 // Alien Constants
 export const ALIEN = {
   NUM: 30,
-  POSX: 20,
-  POSY: 100,
+  POSITION: { X: 20, Y: 100 },
   WIDTH: 40,
   HEIGHT: 40,
   IMAGE: "alien.png",
+  SPEED: 1,
 };
 
 // BOSS Alien Constants

@@ -4,19 +4,19 @@ import { isColliding } from "./utils.js";
 
 class Alien {
   constructor(
+    position = { x: ALIEN.POSITION.X, y: ALIEN.POSITION.Y },
     alienNum = ALIEN.NUM,
-    posX = ALIEN.POSX,
-    posY = ALIEN.POSY,
     width = ALIEN.WIDTH,
     height = ALIEN.HEIGHT,
-    image = ALIEN.IMAGE
+    image = ALIEN.IMAGE,
+    speed = ALIEN.SPEED
   ) {
     this.alienNum = alienNum;
-    this.posX = posX;
-    this.posY = posY;
+    this.position = position;
     this.width = width;
     this.height = height;
     this.image = image;
+    this.speed = speed;
     this.moveDirection = "right";
     this.bullets = [];
     this.aliens = [];
@@ -47,25 +47,25 @@ class Alien {
 
   moveAliens() {
     if (this.moveDirection === "right") {
-      this.posX++;
+      this.position.x += this.speed;
     } else {
-      this.posX--;
+      this.position.x - this.speed;
     }
 
-    this.aliensGroup.style.left = this.posX + "px";
-    this.aliensGroup.style.top = this.posY + "px";
+    this.aliensGroup.style.left = this.position.x + "px";
+    this.aliensGroup.style.top = this.position.y + "px";
 
     let aliens = document.getElementsByClassName("alien");
     for (let alien of aliens) {
       if (alien.getBoundingClientRect().left + 40 >= window.innerWidth) {
         this.moveDirection = "left";
-        this.posY += 30;
+        this.position.y += 30;
         break;
       }
     }
-    if (this.posX < 0) {
+    if (this.position.x < 0) {
       this.moveDirection = "right";
-      this.posY += 25;
+      this.position.y += 25;
     }
   }
 
@@ -99,7 +99,6 @@ class Alien {
     }
     return true;
   }
-  
 
   moveBullets(player) {
     this.bullets = this.bullets.filter((bullet) => {
