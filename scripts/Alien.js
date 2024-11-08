@@ -11,7 +11,8 @@ class Alien {
     image = ALIEN.IMAGE,
     speed = ALIEN.SPEED,
     spacing = { x: ALIEN.SPACING.X, y: ALIEN.SPACING.Y },
-    aliensPerRow = ALIEN.ALIEN_PER_ROW
+    aliensPerRow = ALIEN.ALIEN_PER_ROW,
+    damage = ALIEN.DAMAGE
   ) {
     this.alienNum = alienNum;
     this.position = position;
@@ -21,6 +22,7 @@ class Alien {
     this.speed = speed;
     this.spacing = spacing;
     this.aliensPerRow = aliensPerRow;
+    this.damage = damage;
     this.moveDirection = "right";
     this.bullets = [];
     this.aliens = [];
@@ -107,7 +109,7 @@ class Alien {
     } else if (isColliding(bullet, player.player)) {
       // check if bullet collides with player
       gameContainer.removeChild(bullet);
-      player.lives--;
+      player.lives -= this.damage;
       return false;
     }
     return true;

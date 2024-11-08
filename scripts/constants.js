@@ -18,6 +18,7 @@ export const ALIEN = {
   NUM: 40,
   ALIEN_PER_ROW: 8,
   SPACING: { X: 45, Y: 45 },
+  DAMAGE: 1,
 };
 
 // BOSS Alien Constants
@@ -29,6 +30,7 @@ export const BOSS = {
   HIT_IMAGE: "boss-damage.png",
   HEALTH: 20,
   SPEED: 10,
+  DAMAGE: 3,
 };
 
 export const DIRECTIONS = {

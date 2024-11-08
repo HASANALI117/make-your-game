@@ -1,10 +1,10 @@
 import { gameContainer } from "./constants.js";
 import { BOSS } from "./constants.js";
-import { isColliding } from "./utils.js";
+import Alien from "./Alien.js";
 
 const bossContainer = document.createElement("div");
 
-class BossAlien {
+class BossAlien extends Alien {
   constructor(
     position = { x: BOSS.POSITION.X, y: BOSS.POSITION.Y },
     width = BOSS.WIDTH,
@@ -12,15 +12,12 @@ class BossAlien {
     image = BOSS.IMAGE,
     hitImage = BOSS.HIT_IMAGE,
     health = BOSS.HEALTH,
-    speed = BOSS.SPEED
+    speed = BOSS.SPEED,
+    damage = BOSS.DAMAGE
   ) {
-    this.position = position;
-    this.width = width;
-    this.height = height;
-    this.image = image;
+    super(position, 1, width, height, image, speed, { x: 0, y: 0 }, 1, damage); // Call the parent class constructor
     this.hitImage = hitImage;
     this.health = health;
-    this.speed = speed;
     this.moveDirection = "right";
     this.bullets = [];
     this.bossAlien = null;
@@ -77,28 +74,6 @@ class BossAlien {
 
     gameContainer.appendChild(bullet);
     this.bullets.push(bullet);
-  }
-
-  checkBulletCollision(player, bullet) {
-    if (bullet.getBoundingClientRect().top > window.innerHeight) {
-      // remove bullet if it goes out of the screen
-      gameContainer.removeChild(bullet);
-      return false;
-    } else if (isColliding(bullet, player.player)) {
-      // check if bullet collides with player
-      gameContainer.removeChild(bullet);
-      player.lives = 0;
-      return false;
-    }
-    return true;
-  }
-
-  moveBullets(player) {
-    this.bullets = this.bullets.filter((bullet) => {
-      bullet.style.top = `${bullet.getBoundingClientRect().top + 7}px`;
-
-      return this.checkBulletCollision(player, bullet);
-    });
   }
 
   // Change image on hit
