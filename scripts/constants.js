@@ -11,13 +11,13 @@ export const PLAYER = {
 // Alien Constants
 export const ALIEN = {
   POSITION: { X: 20, Y: 100 },
-  WIDTH: 40,
-  HEIGHT: 40,
+  WIDTH: 50,
+  HEIGHT: 50,
   IMAGE: "alien.png",
   SPEED: 2,
   NUM: 40,
   ALIEN_PER_ROW: 8,
-  SPACING: { X: 45, Y: 35 },
+  SPACING: { X: 45, Y: 45 },
 };
 
 // BOSS Alien Constants
