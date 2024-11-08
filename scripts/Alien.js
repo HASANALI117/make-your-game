@@ -1,5 +1,5 @@
-import { ALIEN, gameContainer, PLAYER_SOUNDS } from "./constants.js";
-import { isColliding, playSoundOnHit } from "./utils.js";
+import { ALIEN, gameContainer, PLAYER_SOUNDS } from './settings.js';
+import { isColliding, playSoundOnHit } from './utils.js';
 
 class Alien {
   constructor(
@@ -22,14 +22,14 @@ class Alien {
     this.spacing = spacing;
     this.aliensPerRow = aliensPerRow;
     this.damage = damage;
-    this.moveDirection = "right";
+    this.moveDirection = 'right';
     this.bullets = [];
     this.aliens = [];
   }
 
   createAliens() {
-    const aliensGroup = document.createElement("div");
-    aliensGroup.setAttribute("id", "aliensGroup");
+    const aliensGroup = document.createElement('div');
+    aliensGroup.setAttribute('id', 'aliensGroup');
 
     // Calculate the width and height dynamically based on aliens per row
     const rows = Math.ceil(this.alienNum / this.aliensPerRow);
@@ -41,9 +41,9 @@ class Alien {
     aliensGroup.style.top = `${this.position.y}px`;
 
     for (let i = 0; i < this.alienNum; i++) {
-      const alien = document.createElement("div");
-      alien.setAttribute("id", `alien-${i}`);
-      alien.classList.add("alien");
+      const alien = document.createElement('div');
+      alien.setAttribute('id', `alien-${i}`);
+      alien.classList.add('alien');
       alien.style.width = `${this.width}px`;
       alien.style.height = `${this.height}px`;
       alien.style.backgroundImage = `url('../assets/${this.image}')`;
@@ -66,14 +66,14 @@ class Alien {
 
   moveAliens() {
     if (this.aliensGroup.getBoundingClientRect().right >= window.innerWidth) {
-      this.moveDirection = "left";
+      this.moveDirection = 'left';
       this.position.y += 30;
     } else if (this.aliensGroup.getBoundingClientRect().left <= 0) {
-      this.moveDirection = "right";
+      this.moveDirection = 'right';
       this.position.y += 30;
     }
 
-    if (this.moveDirection === "right") {
+    if (this.moveDirection === 'right') {
       this.position.x += this.speed;
     } else {
       this.position.x -= this.speed;
@@ -88,8 +88,8 @@ class Alien {
     const randomAlien = document.getElementById(`alien-${randomAlienIndex}`);
 
     if (randomAlien) {
-      const bullet = document.createElement("div");
-      bullet.classList.add("alien-bullet");
+      const bullet = document.createElement('div');
+      bullet.classList.add('alien-bullet');
 
       const alienRect = randomAlien.getBoundingClientRect();
       bullet.style.left = `${alienRect.left + 15}px`;
@@ -117,7 +117,7 @@ class Alien {
 
   moveBullets(player) {
     this.bullets = this.bullets.filter((bullet) => {
-      bullet.style.top = bullet.getBoundingClientRect().top + 7 + "px"; // move bullet down by 7px
+      bullet.style.top = bullet.getBoundingClientRect().top + 7 + 'px'; // move bullet down by 7px
       return this.checkBulletCollision(player, bullet);
     });
   }

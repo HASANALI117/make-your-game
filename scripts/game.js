@@ -2,7 +2,12 @@ import Alien from './Alien.js';
 import Player from './Player.js';
 import BossAlien from './BossAlien.js';
 import { formatTime, calculateFPS, playSoundOnHit } from './utils.js';
-import { LOSE_SOUNDS, WIN_SOUNDS, START_SOUNDS } from './constants.js';
+import {
+  LOSE_SOUNDS,
+  WIN_SOUNDS,
+  START_SOUNDS,
+  TIME_SOUNDS,
+} from './settings.js';
 
 const gameMenu = document.getElementById('game-menu'); // game menu element
 const menuTitle = document.getElementById('menu-title'); // menu title element
@@ -28,6 +33,7 @@ class Game {
     this.addEventListeners(); // add event listeners
     this.gameStarted = false; // Track if the game has started
     this.gameOver = false; // Track if the game is over
+    this.lastSoundTime = 0; // Track the last time the sound was played
   }
 
   // add event listeners for pause, visibility change, start, resume, and restart
@@ -102,6 +108,12 @@ class Game {
 
     // Calculate and update elapsed time
     const elapsedTime = Math.floor((timestamp - this.startTime) / 1000);
+
+    // if the time passes reached 60 seconds, play the time sound once
+    if (elapsedTime % 60 === 0 && elapsedTime !== this.lastSoundTime) {
+      playSoundOnHit(TIME_SOUNDS);
+      this.lastSoundTime = elapsedTime;
+    }
     time.innerText = formatTime(elapsedTime);
 
     // Check if player is out of lives
