@@ -26,6 +26,7 @@ export const BOSS = {
   HEIGHT: 400,
   IMAGE: "alien.png",
   HEALTH: 20,
+  SPEED: 20,
 };
 
 export const DIRECTIONS = {

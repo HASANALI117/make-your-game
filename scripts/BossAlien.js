@@ -1,6 +1,8 @@
 import { gameContainer } from "./constants.js";
 import { BOSS } from "./constants.js";
 
+const bossContainer = document.createElement("div");
+
 class BossAlien {
   constructor(
     position = { x: BOSS.POSITION.X, y: BOSS.POSITION.Y },
@@ -21,29 +23,43 @@ class BossAlien {
   }
 
   createBoss() {
-    const bossConatiner = document.createElement("div");
-    bossConatiner.setAttribute("id", "boss-container");
-
-    this.bossAlien = document.createElement("div");
-    this.bossAlien.setAttribute("id", "boss-alien");
-    this.bossAlien.style.width = `${this.width}px`;
-    this.bossAlien.style.height = `${this.height}px`;
-    this.bossAlien.style.backgroundImage = `url('../assets/${this.image}')`;
-    this.bossAlien.style.left = `${this.position.x}`;
-    this.bossAlien.style.top = `${this.position.y}`;
-
-    bossConatiner.appendChild(this.bossAlien);
-    gameContainer.appendChild(bossConatiner);
+    bossContainer.setAttribute("id", "boss-container");
+    bossContainer.style.left = `${this.position.x}px`;
+    bossContainer.style.top = `${this.position.y}px`;
 
     this.healthBar = document.createElement("div");
     this.healthBar.setAttribute("id", "health-bar");
     this.healthBar.style.width = `${this.width}px`;
     this.healthBar.style.height = "10px";
     this.healthBar.style.backgroundColor = "red";
-    bossConatiner.appendChild(this.healthBar);
+    bossContainer.appendChild(this.healthBar);
+
+    this.bossAlien = document.createElement("div");
+    this.bossAlien.setAttribute("id", "boss-alien");
+    this.bossAlien.style.width = `${this.width}px`;
+    this.bossAlien.style.height = `${this.height}px`;
+    this.bossAlien.style.backgroundImage = `url('../assets/${this.image}')`;
+    bossContainer.appendChild(this.bossAlien);
+
+    gameContainer.appendChild(bossContainer);
   }
 
-  //   moveBoss()
+  moveBoss() {
+    if (this.moveDirection === "right") {
+      this.position.x += BOSS.SPEED;
+    } else {
+      this.position.x -= BOSS.SPEED;
+    }
+
+    bossContainer.style.left = `${this.position.x}px`;
+    bossContainer.style.top = `${this.position.y}px`;
+
+    if (bossContainer.getBoundingClientRect().right >= window.innerWidth) {
+      this.moveDirection = "left";
+    } else if (bossContainer.getBoundingClientRect().left < 0) {
+      this.moveDirection = "right";
+    }
+  }
 }
 
 export default BossAlien;

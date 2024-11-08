@@ -80,6 +80,7 @@ class Game {
 
     // this.Alien.moveAliens();
     // this.Alien.moveBullets(this.Player);
+    this.BossAlien.moveBoss();
 
     this.Player.moveBullets();
     this.Player.updatePosition();

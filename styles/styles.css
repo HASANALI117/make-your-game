@@ -107,8 +107,10 @@ body {
   opacity: 0.8;
 }
 
-#boss-alien {
+#boss-container {
   position: absolute;
+}
+#boss-alien {
   background-repeat: no-repeat;
   background-size: contain;
   margin-top: 20px;
