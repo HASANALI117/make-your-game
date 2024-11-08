@@ -30,9 +30,8 @@ class Alien {
     const aliensGroup = document.createElement("div");
     aliensGroup.setAttribute("id", "aliensGroup");
 
-    const rows = Math.ceil(this.alienNum / this.aliensPerRow);
-
     // Calculate the width and height dynamically based on aliens per row
+    const rows = Math.ceil(this.alienNum / this.aliensPerRow);
     const aliensGroupWidth = this.aliensPerRow * this.spacing.x;
     const aliensGroupHeight = rows * this.spacing.y;
     aliensGroup.style.width = `${aliensGroupWidth}px`;
