@@ -22,6 +22,9 @@ class BossAlien extends Alien {
     this.bullets = [];
     this.bossAlien = null;
     this.healthBar = null;
+
+    this.minY = -250; // Upper limit (can partially go off-screen, but not fully)
+    this.maxY = 300;
   }
 
   createBoss() {
@@ -50,19 +53,60 @@ class BossAlien extends Alien {
   }
 
   moveBoss() {
+    // Horizontal movement based on current direction
     if (this.moveDirection === "right") {
       this.position.x += this.speed;
     } else {
       this.position.x -= this.speed;
     }
 
+    // Vertical zigzag pattern with boundary checks
+    if (this.verticalMoveDirection === "down" && this.position.y < this.maxY) {
+      this.position.y += this.speed * 0.3; // Move down until maxY
+    } else if (
+      this.verticalMoveDirection === "up" &&
+      this.position.y > this.minY
+    ) {
+      this.position.y -= this.speed * 0.3; // Move up until minY
+    } else {
+      // Reverse vertical direction at boundaries
+      this.verticalMoveDirection =
+        this.verticalMoveDirection === "down" ? "up" : "down";
+    }
+
+    // Apply position to bossContainer
     bossContainer.style.left = `${this.position.x}px`;
     bossContainer.style.top = `${this.position.y}px`;
 
+    // Change horizontal direction at screen edges
     if (bossContainer.getBoundingClientRect().right >= window.innerWidth) {
       this.moveDirection = "left";
-    } else if (bossContainer.getBoundingClientRect().left < 0) {
+    } else if (bossContainer.getBoundingClientRect().left <= 0) {
       this.moveDirection = "right";
+    }
+
+    // Change vertical direction occasionally for zigzag
+    if (Math.random() < 0.01) {
+      // Adjust probability as needed
+      this.verticalMoveDirection =
+        this.verticalMoveDirection === "down" ? "up" : "down";
+    }
+
+    // Hover effect
+    if (!this.hovering && this.position.y > 200) {
+      this.hovering = true;
+      this.hoverTime = Date.now();
+    }
+
+    // Pause movement for a hover effect
+    if (this.hovering) {
+      if (Date.now() - this.hoverTime > 1000) {
+        // Hover for 1 second
+        this.hovering = false;
+      } else {
+        // Skip further movement if hovering
+        return;
+      }
     }
   }
 
