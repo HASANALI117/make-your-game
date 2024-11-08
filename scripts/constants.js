@@ -22,11 +22,11 @@ export const ALIEN = {
 // BOSS Alien Constants
 export const BOSS = {
   POSITION: { X: 20, Y: 100 },
-  WIDTH: 400,
-  HEIGHT: 400,
-  IMAGE: "alien.png",
+  WIDTH: 200,
+  HEIGHT: 300,
+  IMAGE: "boss.png",
   HEALTH: 20,
-  SPEED: 20,
+  SPEED: 1,
 };
 
 export const DIRECTIONS = {
