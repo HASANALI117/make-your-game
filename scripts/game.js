@@ -39,10 +39,10 @@ class Game {
   // add event listeners for pause, visibility change, start, resume, and restart
   addEventListeners() {
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') {
+      if (event.key === 'Escape' && !this.gameOver) {
         if (this.isPaused) {
           this.resumeGame();
-        } else {
+        } else if (this.gameStarted) {
           this.pauseGame();
         }
       } else if (event.key === 'Enter') {
@@ -50,14 +50,14 @@ class Game {
           this.startGame();
         } else if (this.Player.lives <= 0 || this.gameOver) {
           this.restartGame();
-        } else if (this.isPaused) {
+        } else if (this.isPaused && !this.gameOver) {
           this.resumeGame();
         }
       }
     });
 
     document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'hidden') {
+      if (document.visibilityState === 'hidden' && this.gameStarted && !this.gameOver) {
         this.pauseGame();
       }
     });
