@@ -1,19 +1,22 @@
-import { DIRECTIONS, gameContainer } from "./constants.js";
-import { PLAYER } from "./constants.js";
+import {
+  PLAYER,
+  DIRECTIONS,
+  gameContainer,
+  ALIEN_SOUNDS,
+  BOSS_SOUNDS,
+} from "./constants.js";
 import { isColliding, playSoundOnHit } from "./utils.js";
 
 class Player {
   constructor(
-    posX = PLAYER.POSX,
-    posY = PLAYER.POSY,
+    position = { x: PLAYER.POSITION.X, y: PLAYER.POSITION.Y },
     width = PLAYER.WIDTH,
     height = PLAYER.HEIGHT,
     image = PLAYER.IMAGE,
     lives = 3,
     score = 0
   ) {
-    this.posX = posX;
-    this.posY = posY;
+    this.position = position;
     this.width = width;
     this.height = height;
     this.image = image;
@@ -26,8 +29,8 @@ class Player {
   createPlayer() {
     let player = document.createElement("div");
     player.setAttribute("id", "player");
-    player.style.top = this.posY + "px";
-    player.style.left = this.posX + "px";
+    player.style.left = `${this.position.x}px`;
+    player.style.top = `${this.position.y}px`;
     player.style.width = this.width + "px";
     player.style.height = this.height + "px";
     player.style.backgroundImage = `url('../assets/${this.image}')`;
@@ -114,9 +117,22 @@ class Player {
 
           this.score += 10;
 
-          playSoundOnHit("../sounds/munch.wav");
+          playSoundOnHit(ALIEN_SOUNDS);
         }
       });
+    });
+  }
+
+  checkCollisionWithBoss(boss) {
+    return this.bullets.some((bullet, index) => {
+      if (isColliding(bullet, boss.bossAlien)) {
+        gameContainer.removeChild(bullet);
+        this.bullets.splice(index, 1);
+
+        playSoundOnHit(BOSS_SOUNDS);
+        return true;
+      }
+      return false;
     });
   }
 }
