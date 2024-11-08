@@ -26,6 +26,7 @@ export const BOSS = {
   WIDTH: 200,
   HEIGHT: 300,
   IMAGE: "boss.png",
+  HIT_IMAGE: "boss-damage.png",
   HEALTH: 20,
   SPEED: 10,
 };

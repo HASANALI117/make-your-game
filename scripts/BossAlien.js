@@ -10,6 +10,7 @@ class BossAlien {
     width = BOSS.WIDTH,
     height = BOSS.HEIGHT,
     image = BOSS.IMAGE,
+    hitImage = BOSS.HIT_IMAGE,
     health = BOSS.HEALTH,
     speed = BOSS.SPEED
   ) {
@@ -17,6 +18,7 @@ class BossAlien {
     this.width = width;
     this.height = height;
     this.image = image;
+    this.hitImage = hitImage;
     this.health = health;
     this.speed = speed;
     this.moveDirection = "right";
@@ -99,12 +101,27 @@ class BossAlien {
     });
   }
 
+  // Change image on hit
+  changeImageOnHit() {
+    if (this.bossAlien) {
+      // Set boss to hit image
+      this.bossAlien.style.backgroundImage = `url('../assets/${this.hitImage}')`;
+
+      // Revert back to normal image after a short delay
+      setTimeout(() => {
+        this.bossAlien.style.backgroundImage = `url('../assets/${this.image}')`;
+      }, 200); // 200ms delay (adjust as needed)
+    }
+  }
+
   reduceHealth() {
     this.health -= 1;
     this.healthBar.style.width = `${(this.health / 20) * 100}%`;
 
+    this.changeImageOnHit();
+
     if (this.health <= 0) {
-      gameContainer.removeChild(bossContainer);
+      this.bossAlien.style.backgroundImage = `url('../assets/${this.hitImage}')`;
       return true;
     }
 
