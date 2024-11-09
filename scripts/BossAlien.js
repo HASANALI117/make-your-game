@@ -22,6 +22,12 @@ class BossAlien extends Alien {
     this.bullets = [];
     this.bossAlien = null;
     this.healthBar = null;
+    this.preloadImage(this.hitImage);
+  }
+
+  preloadImage(imageSrc) {
+    const img = new Image();
+    img.src = `../assets/${imageSrc}`;
   }
 
   createBoss() {
