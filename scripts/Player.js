@@ -4,8 +4,8 @@ import {
   gameContainer,
   ALIEN_SOUNDS,
   BOSS_SOUNDS,
-} from "./constants.js";
-import { isColliding, playSoundOnHit } from "./utils.js";
+} from './settings.js';
+import { isColliding, playSoundOnHit } from './utils.js';
 
 class Player {
   constructor(
@@ -27,12 +27,12 @@ class Player {
   }
 
   createPlayer() {
-    let player = document.createElement("div");
-    player.setAttribute("id", "player");
+    let player = document.createElement('div');
+    player.setAttribute('id', 'player');
     player.style.left = `${this.position.x}px`;
-    player.style.top = `${this.position.y}px`;
-    player.style.width = this.width + "px";
-    player.style.height = this.height + "px";
+    player.style.bottom = `${this.position.y}px`;
+    player.style.width = this.width + 'px';
+    player.style.height = this.height + 'px';
     player.style.backgroundImage = `url('../assets/${this.image}')`;
     gameContainer.appendChild(player);
     this.player = player;
@@ -40,17 +40,17 @@ class Player {
 
   handleMovement() {
     this.player = player;
-    document.addEventListener("keydown", (e) => {
+    document.addEventListener('keydown', (e) => {
       if (DIRECTIONS[e.key]) {
         DIRECTIONS[e.key].movement = true;
       }
 
-      if (e.key == " ") {
+      if (e.key == ' ') {
         this.generateBullets();
       }
     });
 
-    document.addEventListener("keyup", (e) => {
+    document.addEventListener('keyup', (e) => {
       if (DIRECTIONS[e.key]) {
         DIRECTIONS[e.key].movement = false;
       }
@@ -78,17 +78,19 @@ class Player {
   }
 
   generateBullets() {
-    let bullet = document.createElement("div");
-    bullet.classList.add("bullet");
-    const playerLeft = this.player.getBoundingClientRect().left;
-    const playerTop = this.player.getBoundingClientRect().top;
+    if (this.bullets.length < PLAYER.MAX_BULLETS) {
+      let bullet = document.createElement('div');
+      bullet.classList.add('bullet');
+      const playerLeft = this.player.getBoundingClientRect().left;
+      const playerTop = this.player.getBoundingClientRect().top;
 
-    bullet.style.left = playerLeft + 20 + "px";
-    bullet.style.top = playerTop + "px";
+      bullet.style.left = playerLeft + 20 + 'px';
+      bullet.style.top = playerTop + 'px';
 
-    gameContainer.appendChild(bullet);
+      gameContainer.appendChild(bullet);
 
-    this.bullets.push(bullet);
+      this.bullets.push(bullet);
+    }
   }
 
   moveBullets() {
@@ -96,7 +98,7 @@ class Player {
       const bulletTop = bullet.getBoundingClientRect().top;
 
       if (bulletTop > 0) {
-        bullet.style.top = bulletTop - 5 + "px";
+        bullet.style.top = bulletTop - 5 + 'px';
         return true;
       } else {
         gameContainer.removeChild(bullet);
