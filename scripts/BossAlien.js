@@ -21,6 +21,7 @@ class BossAlien extends Alien {
     this.moveDirection = 'right';
     this.bullets = [];
     this.bossAlien = null;
+    this.bossAlienHit = null;
     this.healthBar = null;
     this.minY = -250;
     this.maxY = 300;
@@ -53,6 +54,15 @@ class BossAlien extends Alien {
     this.bossAlien.style.height = `${this.height}px`;
     this.bossAlien.style.backgroundImage = `url('../assets/${this.image}')`;
     bossContainer.appendChild(this.bossAlien);
+
+    // Hit image for boss
+    this.bossAlienHit = document.createElement('img');
+    this.bossAlienHit.setAttribute('id', 'boss-alien-hit');
+    this.bossAlienHit.style.width = `${this.width}px`;
+    this.bossAlienHit.style.height = `${this.height}px`;
+    this.bossAlienHit.src = `../assets/${this.hitImage}`;
+    this.bossAlienHit.style.display = 'none';
+    this.bossAlien.appendChild(this.bossAlienHit);
 
     gameContainer.appendChild(bossContainer);
   }
@@ -129,11 +139,11 @@ class BossAlien extends Alien {
   changeImageOnHit() {
     if (this.bossAlien) {
       // Set boss to hit image
-      this.bossAlien.style.backgroundImage = `url('../assets/${this.hitImage}')`;
+      this.bossAlienHit.style.display = 'block';
 
       // Revert back to normal image after a short delay
       setTimeout(() => {
-        this.bossAlien.style.backgroundImage = `url('../assets/${this.image}')`;
+        this.bossAlienHit.style.display = 'none';
       }, 200); // 200ms delay (adjust as needed)
     }
   }
