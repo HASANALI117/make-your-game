@@ -5,13 +5,13 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Game container styles */
 #game-container {
   background-image: url("../assets/bg-4.jpeg");
   background-repeat: no-repeat;
   background-size: cover;
   height: 100vh;
 }
-
 #game-container #labels {
   color: white;
   display: flex;
@@ -19,30 +19,27 @@ body {
   padding: 1rem 5rem;
 }
 
+/* Player styles */
 #player {
   background-size: cover;
   position: absolute;
 }
-
-#aliensGroup {
-  /* display: flex;
-  flex-wrap: wrap; */
-  width: 740px;
-  height: 420px;
-  position: absolute;
-}
-
-.alien {
-  background-repeat: no-repeat;
-  position: absolute;
-}
-
 .bullet {
   height: 10px;
   width: 10px;
   border-radius: 5px;
   background: red;
   position: absolute;
+}
+
+/* Aliens styles */
+#aliensGroup {
+  position: absolute;
+}
+.alien {
+  position: absolute;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 .alien-bullet {
   height: 10px;
@@ -52,6 +49,34 @@ body {
   position: absolute;
 }
 
+/* Boss styles */
+#boss-container {
+  position: absolute;
+}
+#boss-alien {
+  margin-top: 20px;
+  position: relative;
+}
+
+#boss-alien img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.boss-bullet {
+  height: 20px;
+  width: 20px;
+  border-radius: 100%;
+  background: aquamarine;
+  position: absolute;
+}
+#health-bar {
+  border-radius: 10px;
+}
+
+/* Game Menu styles */
 #game-menu {
   position: absolute;
   top: 0;
@@ -89,17 +114,17 @@ body {
 }
 
 #start-button {
-  background-color: #007bff; /* Blue */
+  background-color: #007bff;
   color: white;
 }
 
 #resume-button {
-  background-color: #28a745; /* Green */
+  background-color: #28a745;
   color: white;
 }
 
 #restart-button {
-  background-color: #dc3545; /* Red */
+  background-color: #dc3545;
   color: white;
 }
 

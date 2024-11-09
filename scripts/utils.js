@@ -13,7 +13,7 @@ export function isColliding(element1, element2) {
 export function formatTime(seconds) {
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = seconds % 60;
-  return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
+  return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
 }
 
 export function calculateFPS(lastTime, timestamp) {
@@ -21,7 +21,10 @@ export function calculateFPS(lastTime, timestamp) {
   return Math.round(1 / delta);
 }
 
-export function playSoundOnHit(soundFilePath) {
-  const audio = new Audio(soundFilePath);
+export function playSoundOnHit(soundFilePaths, volume = 1.0) {
+  const randomIndex = Math.floor(Math.random() * soundFilePaths.length);
+  const audio = new Audio(soundFilePaths[randomIndex]);
+  audio.volume = volume; // Set the volume
   audio.play();
+  return audio;
 }
