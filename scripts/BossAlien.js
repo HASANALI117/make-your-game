@@ -58,12 +58,8 @@ class BossAlien extends Alien {
   }
 
   moveBoss() {
-<<<<<<< HEAD
-    if (this.moveDirection === 'right') {
-=======
     // Horizontal movement based on current direction
     if (this.moveDirection === "right") {
->>>>>>> origin/boss-movement
       this.position.x += this.speed;
     } else {
       this.position.x -= this.speed;
@@ -89,15 +85,9 @@ class BossAlien extends Alien {
 
     // Change horizontal direction at screen edges
     if (bossContainer.getBoundingClientRect().right >= window.innerWidth) {
-<<<<<<< HEAD
-      this.moveDirection = 'left';
-    } else if (bossContainer.getBoundingClientRect().left < 0) {
-      this.moveDirection = 'right';
-=======
       this.moveDirection = "left";
     } else if (bossContainer.getBoundingClientRect().left <= 0) {
       this.moveDirection = "right";
->>>>>>> origin/boss-movement
     }
 
     // Change vertical direction occasionally for zigzag
