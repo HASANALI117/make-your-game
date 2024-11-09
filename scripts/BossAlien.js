@@ -25,12 +25,6 @@ class BossAlien extends Alien {
     this.healthBar = null;
     this.minY = -250;
     this.maxY = 300;
-    this.preloadImage(this.hitImage);
-  }
-
-  preloadImage(imageSrc) {
-    const img = new Image();
-    img.src = `../assets/${imageSrc}`;
   }
 
   createBoss() {
