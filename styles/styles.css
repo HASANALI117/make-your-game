@@ -54,9 +54,16 @@ body {
   position: absolute;
 }
 #boss-alien {
-  background-repeat: no-repeat;
-  background-size: contain;
   margin-top: 20px;
+  position: relative;
+}
+
+#boss-alien img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 .boss-bullet {
   height: 20px;

@@ -1,8 +1,8 @@
-import { gameContainer } from './settings.js';
-import { BOSS } from './settings.js';
-import Alien from './Alien.js';
+import { gameContainer } from "./settings.js";
+import { BOSS } from "./settings.js";
+import Alien from "./Alien.js";
 
-const bossContainer = document.createElement('div');
+const bossContainer = document.createElement("div");
 
 class BossAlien extends Alien {
   constructor(
@@ -18,7 +18,7 @@ class BossAlien extends Alien {
     super(position, 1, width, height, image, speed, { x: 0, y: 0 }, 1, damage); // Call the parent class constructor
     this.hitImage = hitImage;
     this.health = health;
-    this.moveDirection = 'right';
+    this.moveDirection = "right";
     this.bullets = [];
     this.bossAlien = null;
     this.bossAlienHit = null;
@@ -35,34 +35,35 @@ class BossAlien extends Alien {
 
   createBoss() {
     // Boss Container element
-    bossContainer.setAttribute('id', 'boss-container');
+    bossContainer.setAttribute("id", "boss-container");
     bossContainer.style.left = `${this.position.x}px`;
     bossContainer.style.top = `${this.position.y}px`;
 
     // Healthbar element
-    this.healthBar = document.createElement('div');
-    this.healthBar.setAttribute('id', 'health-bar');
-    this.healthBar.style.width = '100%';
-    this.healthBar.style.height = '10px';
-    this.healthBar.style.backgroundColor = 'red';
+    this.healthBar = document.createElement("div");
+    this.healthBar.setAttribute("id", "health-bar");
+    this.healthBar.style.width = "100%";
+    this.healthBar.style.height = "10px";
+    this.healthBar.style.backgroundColor = "red";
     bossContainer.appendChild(this.healthBar);
 
     // Boss Alien element
-    this.bossAlien = document.createElement('div');
-    this.bossAlien.setAttribute('id', 'boss-alien');
+    this.bossAlien = document.createElement("div");
+    this.bossAlien.setAttribute("id", "boss-alien");
     this.bossAlien.style.width = `${this.width}px`;
     this.bossAlien.style.height = `${this.height}px`;
-    this.bossAlien.style.backgroundImage = `url('../assets/${this.image}')`;
     bossContainer.appendChild(this.bossAlien);
 
-    // Hit image for boss
-    this.bossAlienHit = document.createElement('img');
-    this.bossAlienHit.setAttribute('id', 'boss-alien-hit');
-    this.bossAlienHit.style.width = `${this.width}px`;
-    this.bossAlienHit.style.height = `${this.height}px`;
-    this.bossAlienHit.src = `../assets/${this.hitImage}`;
-    this.bossAlienHit.style.display = 'none';
-    this.bossAlien.appendChild(this.bossAlienHit);
+    // Normal state image
+    this.bossAlienImage = document.createElement("img");
+    this.bossAlienImage.src = `../assets/${this.image}`;
+    this.bossAlienImage.style.zIndex = "1";
+    this.bossAlien.appendChild(this.bossAlienImage);
+
+    // Hit state image
+    this.bossAlienHitImage = document.createElement("img");
+    this.bossAlienHitImage.src = `../assets/${this.hitImage}`;
+    this.bossAlien.appendChild(this.bossAlienHitImage);
 
     gameContainer.appendChild(bossContainer);
   }
@@ -126,8 +127,8 @@ class BossAlien extends Alien {
   }
 
   generateBullets() {
-    const bullet = document.createElement('div');
-    bullet.classList.add('boss-bullet');
+    const bullet = document.createElement("div");
+    bullet.classList.add("boss-bullet");
     bullet.style.left = `${this.position.x + this.width / 2}px`;
     bullet.style.top = `${this.position.y + this.height}px`;
 
@@ -138,13 +139,15 @@ class BossAlien extends Alien {
   // Change image on hit
   changeImageOnHit() {
     if (this.bossAlien) {
-      // Set boss to hit image
-      this.bossAlienHit.style.display = 'block';
+      // Swap z-index values to bring hit image to front
+      this.bossAlienImage.style.zIndex = "0";
+      this.bossAlienHitImage.style.zIndex = "1";
 
-      // Revert back to normal image after a short delay
+      // Revert back after a short delay
       setTimeout(() => {
-        this.bossAlienHit.style.display = 'none';
-      }, 200); // 200ms delay (adjust as needed)
+        this.bossAlienImage.style.zIndex = "1";
+        this.bossAlienHitImage.style.zIndex = "0";
+      }, 200);
     }
   }
 
@@ -155,7 +158,6 @@ class BossAlien extends Alien {
     this.changeImageOnHit();
 
     if (this.health <= 0) {
-      this.bossAlien.style.backgroundImage = `url('../assets/${this.hitImage}')`;
       return true;
     }
 
