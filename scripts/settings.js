@@ -2,10 +2,11 @@ export const gameContainer = document.getElementById('game-container');
 
 // Player Constants
 export const PLAYER = {
-  POSITION: { X: 20, Y: 850 },
+  POSITION: { X: 20, Y: 50 },
   WIDTH: 50,
   HEIGHT: 50,
   IMAGE: 'plane.png',
+  MAX_BULLETS: 3,
 };
 
 // Alien Constants

@@ -30,7 +30,7 @@ class Player {
     let player = document.createElement('div');
     player.setAttribute('id', 'player');
     player.style.left = `${this.position.x}px`;
-    player.style.top = `${this.position.y}px`;
+    player.style.bottom = `${this.position.y}px`;
     player.style.width = this.width + 'px';
     player.style.height = this.height + 'px';
     player.style.backgroundImage = `url('../assets/${this.image}')`;
@@ -78,17 +78,19 @@ class Player {
   }
 
   generateBullets() {
-    let bullet = document.createElement('div');
-    bullet.classList.add('bullet');
-    const playerLeft = this.player.getBoundingClientRect().left;
-    const playerTop = this.player.getBoundingClientRect().top;
+    if (this.bullets.length < PLAYER.MAX_BULLETS) {
+      let bullet = document.createElement('div');
+      bullet.classList.add('bullet');
+      const playerLeft = this.player.getBoundingClientRect().left;
+      const playerTop = this.player.getBoundingClientRect().top;
 
-    bullet.style.left = playerLeft + 20 + 'px';
-    bullet.style.top = playerTop + 'px';
+      bullet.style.left = playerLeft + 20 + 'px';
+      bullet.style.top = playerTop + 'px';
 
-    gameContainer.appendChild(bullet);
+      gameContainer.appendChild(bullet);
 
-    this.bullets.push(bullet);
+      this.bullets.push(bullet);
+    }
   }
 
   moveBullets() {
